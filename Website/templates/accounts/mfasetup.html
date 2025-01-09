@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>2FA setup</h1>
+        <div class="p-2 row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} mt-3 alert-dismissible" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        onclick=delete_flash(this)>
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <div>
+                    <p>2-Factor Authentication must be set up to continue, open your MFA app and scan the QR code or
+                        type in the following code:</p>
+                </div>
+                <div style="background-color: lightsalmon">
+                    <h1>Key</h1>
+                    <img src="{{ mfaqrcode }}">
+
+                    {{ key }}
+                </div>
+                <div>After setup please continue to <a href="/login">login</a></div>
+            </div>
+            <div class="col-3"></div>
+        </div>
+
+    </div>
+{% endblock %}

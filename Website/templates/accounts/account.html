@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="p-2 row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="p-2 bg-light border border-primary" style="text-align: left">
+
+                <div>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% for category, message in messages %}
+                            <div style="text-align: left" class="alert alert-{{ category }} mt-3 alert-dismissible"
+                                 role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        onclick=delete_flash(this)>
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <div>
+                    <h2>My Information:</h2>
+                    <div style="text-align:center; margin: auto">
+                        <div><h4 style="display:inline">Account ID: </h4> <h5 style="display:inline">{{ user.id }}</h5>
+                        </div>
+                        <br>
+                        <div><h4 style="display:inline">First Name: </h4> <h5
+                                style="display:inline">{{ user.firstname }}</h5></div>
+                        <br>
+                        <div><h4 style="display:inline">Surname: </h4><h5
+                                style="display:inline">{{ user.lastname }}</h5></div>
+                        <br>
+                        <div><h4 style="display:inline">Phone Number: </h4><h5
+                                style="display:inline">{{ user.phone }}</h5></div>
+                        <br>
+                    </div>
+                    <h2>My Posts:</h2>
+                    <div style="text-align:center; margin: auto">
+                        {% for post in user.posts %}
+                            <div class="card border border-dark" style="width: 70%; text-align:center; margin: auto">
+
+                                <div class="card-header bg-dark text-white border border-dark">
+                                    <h4>{{ post.title }}</h4>
+                                    <small>{{ post.created.strftime('%H:%M:%S %d-%m-%Y') }}</small>
+                                </div>
+                                <div class="card-body">{{ post.body }}</div>
+
+                                <div class="card-footer">
+                                    <a class="navbar-item" href="{{ url_for('posts.update', id=post.id) }}">Update</a>
+                                    <a class="navbar-item text-danger" href="{{ url_for('posts.delete', id=post.id) }}">Delete</a>
+                                </div>
+
+                            </div>
+                            <br>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+{% endblock %}

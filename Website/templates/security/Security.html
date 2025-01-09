@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div style="text-align: left" class="alert alert-{{ category }} mt-3 alert-dismissible"
+                     role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            onclick=delete_flash(this)>
+                        <span>&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Log ID</th>
+            <th scope="col">User ID</th>
+            <th scope="col">Username</th>
+            <th scope="col">Registration date</th>
+            <th scope="col">Latest Login</th>
+            <th scope="col">Previous Login</th>
+            <th scope="col">Latest IP Address</th>
+            <th scope="col">Previous IP Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in logs %}
+            <tr>
+                <td>{{ log.logid }}</td>
+                <td>{{ log.loguserid }}</td>
+                <td>{{ log.loguser.firstname }}</td>
+                <td>{{ log.registrationdate }}</td>
+                <td>{{ log.latestlogindate }}</td>
+                <td>{{ log.lastlogindate }}</td>
+                <td>{{ log.latestip }}</td>
+                <td>{{ log.lastip }}</td>
+            </tr>
+        {% endfor %}
+        <tbody>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Security Log Entries</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for log in logfiles %}
+            <tr>
+                <td>{{ log }}</td>
+            </tr>
+        {% endfor %}
+        <tbody>
+        </tbody>
+    </table>
+{% endblock %}
